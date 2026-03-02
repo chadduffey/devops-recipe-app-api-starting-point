@@ -6,7 +6,10 @@ services:
       context: .
     restart: always
     volumes:
-      - static-data:/vol/web
+      - static-data:/vol/web/static
+      - static-media-data:/vol/web/media
+    env_file:
+      - .env
     environment:
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
@@ -20,6 +23,8 @@ services:
   db:
     image: postgres:13-alpine
     restart: always
+    env_file:
+      - .env
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
@@ -37,7 +42,9 @@ services:
       - 80:8000
     volumes:
       - static-data:/vol/static
+      - static-media-data:/vol/media
 
 volumes:
   postgres-data:
   static-data:
+  static-media-data:
